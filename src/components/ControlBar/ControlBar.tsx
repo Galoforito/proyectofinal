@@ -9,6 +9,14 @@ interface PropsCategory{
     alPresionarStock:(valor:string)=>void;
 }
 
+interface PropsSearch{
+    alEscribir:(valor:string)=>void;
+}
+
+interface PropsOrdenar{
+    alOrdenar:(valor:string)=>void;
+}
+
 function Category({alPresionarSeries, alPresionarSubgroup, alPresionarOrigin, alPresionarReleaseYear, alPresionarPrice, alPresionarStock}: PropsCategory){
     return(
         <>
@@ -58,7 +66,7 @@ function Category({alPresionarSeries, alPresionarSubgroup, alPresionarOrigin, al
                 <option value="Transformers: Age of Extinction (2014)">Transformers: Age of Extinction (2014)</option>
             </select>
             <label htmlFor="release_year">Año de Lanzamiento: </label>
-            <select id="release_year" className="category-filter" onChange={((e)=>alPresionarReleaseYear(e.target.value))}>
+            <select id="release_year" className="category-filter" onChange={(e)=>alPresionarReleaseYear(e.target.value)}>
                 <option value="All">All</option>
                 <option value="2018">2018</option>
                 <option value="2019">2019</option>
@@ -70,8 +78,7 @@ function Category({alPresionarSeries, alPresionarSubgroup, alPresionarOrigin, al
                 <option value="2026">2026</option>
             </select>
             <label htmlFor="price">Precio: </label>
-            <select id="price" className="category-filter" onChange={((e)=>alPresionarPrice(e.target.value))}>
-                //Adapta el texto que tienen los options a los values que tienen
+            <select id="price" className="category-filter" onChange={(e)=>alPresionarPrice(e.target.value)}>
                 <option value="All">All</option>
                 <option value="<= $500 MXN">&lt;= $500 MXN</option>
                 <option value="> $500 MXN & <= $1,000 MXN">&gt; $500 MXN &lt;= $1,000 MXN</option>
@@ -79,20 +86,15 @@ function Category({alPresionarSeries, alPresionarSubgroup, alPresionarOrigin, al
                 <option value="> $2,000 MXN">&gt; $2,000 MXN</option>
             </select>
             <label htmlFor="stock">Stock: </label>
-            <select id="stock" className="category-filter" onChange={((e)=>alPresionarStock(e.target.value))}>
+            <select id="stock" className="category-filter" onChange={(e)=>alPresionarStock(e.target.value)}>
                 <option value="All">All</option>
                 <option value="<= 5">&lt;= 5</option>
                 <option value="> 5 & <= 10">&gt; 5 &lt;= 10</option>
                 <option value="> 10 & <= 15">&gt; 10 &lt;= 15</option>
                 <option value="> 15">&gt; 15</option>
             </select>
-            
         </>
     )
-}
-
-interface PropsSearch{
-    alEscribir:(valor:string)=>void
 }
 
 function Search({alEscribir}:PropsSearch){
@@ -105,6 +107,18 @@ function Search({alEscribir}:PropsSearch){
     )
 }
 
+function Ordenar({alOrdenar}:PropsOrdenar){
+    return(
+        <select className="category-filter" onChange={(e)=>alOrdenar(e.target.value)}>
+            <option value="none">Ordenar por</option>
+            <option value="nombre-az">Nombre A-Z</option>
+            <option value="nombre-za">Nombre Z-A</option>
+            <option value="precio-asc">Precio menor a mayor</option>
+            <option value="precio-desc">Precio mayor a menor</option>
+        </select>
+    )
+}
+
 function CreateModal(){
     return(
         <button type="button" className="btn btn-primary create-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
@@ -113,17 +127,18 @@ function CreateModal(){
     )
 }
 
-export default function ControlBar({alPresionarSeries, alPresionarSubgroup, alPresionarOrigin, alPresionarReleaseYear, alPresionarPrice, alPresionarStock, alEscribir}: PropsCategory & PropsSearch){
+export default function ControlBar({alPresionarSeries, alPresionarSubgroup, alPresionarOrigin, alPresionarReleaseYear, alPresionarPrice, alPresionarStock, alEscribir, alOrdenar}: PropsCategory & PropsSearch & PropsOrdenar){
     return(
         <div className="control-bar">
             <Category
-            alPresionarSeries={alPresionarSeries}
-            alPresionarSubgroup={alPresionarSubgroup}
-            alPresionarOrigin={alPresionarOrigin}
-            alPresionarReleaseYear={alPresionarReleaseYear}
-            alPresionarPrice={alPresionarPrice}
-            alPresionarStock={alPresionarStock}
+                alPresionarSeries={alPresionarSeries}
+                alPresionarSubgroup={alPresionarSubgroup}
+                alPresionarOrigin={alPresionarOrigin}
+                alPresionarReleaseYear={alPresionarReleaseYear}
+                alPresionarPrice={alPresionarPrice}
+                alPresionarStock={alPresionarStock}
             />
+            <Ordenar alOrdenar={alOrdenar}/>
             <Search alEscribir={alEscribir}/>
             <CreateModal/>
         </div>

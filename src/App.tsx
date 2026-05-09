@@ -2,7 +2,9 @@ import { ControlBar, TableList, Formulario, Title } from './components';
 import { useTransformers } from './hooks';
 
 export default function App() {
-    const {TransformerFiltrado,
+    const {
+        TransformerFiltrado,
+        valorTotal,
         insertar,
         editar,
         eliminar,
@@ -13,46 +15,51 @@ export default function App() {
         setPrice,
         setStock,
         setFiltro,
+        setOrdenamiento,
         datoEditar,
-        setDatoEditar} = useTransformers();    
+        setDatoEditar
+    } = useTransformers();
+
     return (
       <>
-        <Title></Title>
+        <Title />
         <ControlBar
-        alPresionarSeries={setSeries}
-        alPresionarSubgroup={setSubgroup}
-        alPresionarOrigin={setOrigin}
-        alPresionarReleaseYear={setReleaseYear}
-        alPresionarPrice={setPrice}
-        alPresionarStock={setStock}
-        alEscribir={setFiltro}
+            alPresionarSeries={setSeries}
+            alPresionarSubgroup={setSubgroup}
+            alPresionarOrigin={setOrigin}
+            alPresionarReleaseYear={setReleaseYear}
+            alPresionarPrice={setPrice}
+            alPresionarStock={setStock}
+            alEscribir={setFiltro}
+            alOrdenar={setOrdenamiento}
         />
         <Formulario
-        insertar={insertar}
-        editar={editar}
-        datoEditar={datoEditar}
-        setDatoEditar={setDatoEditar}
+            insertar={insertar}
+            editar={editar}
+            datoEditar={datoEditar}
+            setDatoEditar={setDatoEditar}
         />
         <div className="row">
-          {TransformerFiltrado.map((dato) => (
-            <TableList
-              key={dato.id}
-              id={dato.id}
-              name={dato.name}
-              origin={dato.origin}
-              series={dato.series}
-              subgroup={dato.subgroup}
-              release_year={dato.release_year}
-              image_url={dato.image_url}
-              price={dato.price}
-              stock={dato.stock}
-              onEditar={(id, name, origin, series, subgroup, release_year, image_url, price, stock) => setDatoEditar({ id, name, origin, series, subgroup, release_year, image_url, price, stock })}
-              onEliminar={(id) => eliminar(id)}
-            />
-          ))}
+            <div className="col-12">
+                <h4>Valor total del inventario: ${valorTotal.toLocaleString('es-MX')} MXN</h4>
+            </div>
+            {TransformerFiltrado.map((dato) => (
+                <TableList
+                    key={dato.id}
+                    id={dato.id}
+                    name={dato.name}
+                    origin={dato.origin}
+                    series={dato.series}
+                    subgroup={dato.subgroup}
+                    release_year={dato.release_year}
+                    image_url={dato.image_url}
+                    price={dato.price}
+                    stock={dato.stock}
+                    onEditar={(id, name, origin, series, subgroup, release_year, image_url, price, stock) => setDatoEditar({ id, name, origin, series, subgroup, release_year, image_url, price, stock })}
+                    onEliminar={(id) => eliminar(id)}
+                />
+            ))}
         </div>
-
-        
       </>
     )
 }
