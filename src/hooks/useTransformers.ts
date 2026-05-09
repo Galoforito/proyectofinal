@@ -1,6 +1,6 @@
 import { supabase } from '../utils/supabase'
 import { useState, useEffect } from 'react';
-import { Transformer } from '../type';
+import type{ Transformer } from '../type';
 
 export default function useTransformers() {
     const [datos, setDatos] = useState<Transformer[]>([]);

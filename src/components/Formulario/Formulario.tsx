@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import './Formulario.css';
-import { Modal } from "react-bootstrap";
-
+  
 interface Props{
     insertar: (name: string, origin: string, series: string, subgroup: string, release_year: number, image_url: string, price: number, stock: number) => void;
     editar: (id: number, name: string, origin: string, series: string, subgroup: string, release_year: number, image_url: string, price: number, stock: number) => void;
@@ -32,7 +31,7 @@ export default function Formulario({ insertar, editar, datoEditar, setDatoEditar
     }
   }, [datoEditar]);
 
-  const manejarSubmit = (e) => {
+  const manejarSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (datoEditar !== null) {
       editar(datoEditar.id, nombre, origen, serie, subgrupo, anioLanzamiento, urlImagen, precio, stock);
@@ -51,7 +50,7 @@ export default function Formulario({ insertar, editar, datoEditar, setDatoEditar
   }
   return (
     <>
-      <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex={-1} aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div className="modal-dialog">
           <div className="modal-content">
             <div className="modal-header">

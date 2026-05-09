@@ -8,9 +8,9 @@ interface Props{
     subgroup: string,
     release_year: number,
     image_url: string,
-    price: string,
-    stock: string
-    onEditar: (id: number, name: string, origin: string, series: string, subgroup: string, release_year: number, image_url: string, price: string, stock: string) => void;
+    price: number,
+    stock: number
+    onEditar: (id: number, name: string, origin: string, series: string, subgroup: string, release_year: number, image_url: string, price: number, stock: number) => void;
     onEliminar: (id: number) => void;
 }
 
@@ -18,7 +18,7 @@ export default function TableList({id, name, origin, series, subgroup, release_y
     return (
         <>
             <div className="col-12 col-md-6 col-lg-4">
-                <div className={`card ${(parseInt(stock) < 5) ? "border-danger" : ""}`}>
+                <div className={`card ${(stock < 5) ? "border-danger" : ""}`}>
                     <div className="card-img-top">
                         <img src={image_url} alt={name} className="image"/>
                     </div>

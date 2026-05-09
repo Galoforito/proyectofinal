@@ -1,41 +1,4 @@
 import "./ControlBar.css"
-import { Formulario } from "../index";
-//Ayúdame a añadir el css!!!
-
-/*
-.control-bar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #1a1a1a; 
-    color: #fff;
-}
-.control-bar .search-input {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    width: 200px;
-}
-.control-bar .category-filter {
-    padding: 5px 10px;
-    border: none;
-    border-radius: 4px;
-    background-color: #333; 
-    color: #fff; 
-}
-.control-bar .create-button {
-    padding: 5px 15px;
-    border: none;
-    border-radius: 4px;
-    background-color: #007bff; 
-    color: #fff; 
-    cursor: pointer;
-}
-.control-bar .create-button:hover {
-    background-color: #0056b3; 
-}
-*/
 
 interface PropsCategory{
     alPresionarSeries:(valor:string)=>void;
@@ -142,7 +105,7 @@ function Search({alEscribir}:PropsSearch){
     )
 }
 
-function CreateModal({}){
+function CreateModal(){
     return(
         <button type="button" className="btn btn-primary create-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
             Crear
