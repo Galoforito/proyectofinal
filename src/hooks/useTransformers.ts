@@ -1,9 +1,10 @@
 import { supabase } from '../utils/supabase'
 import { useState, useEffect } from 'react';
+import { Transformer } from '../type';
 
 export default function useTransformers() {
-    const [datos, setDatos] = useState([]);
-    const [datoEditar, setDatoEditar] = useState<{id: number, name: string, origin: string, series: string, subgroup: string, release_year: number, image_url: string, price: number, stock: number} | null>(null);
+    const [datos, setDatos] = useState<Transformer[]>([]);
+    const [datoEditar, setDatoEditar] = useState<Transformer | null>(null);
     
     const [series, setSeries] = useState("all");
 
@@ -23,7 +24,7 @@ export default function useTransformers() {
     async function getTransformers() {
         const{data, error} = await supabase.from('transformers_toys').select('*');
         if(data){
-            setDatos(data);
+            setDatos(data as Transformer[]);
         }
         if(error){
             console.error('Error al traer datos:', error);
@@ -32,7 +33,7 @@ export default function useTransformers() {
 
     async function insertar(name: string, origin: string, series: string, subgroup: string, release_year: number, image_url: string, price: number, stock: number){
         try {
-            const {data, error} = await supabase.from('transformers_toys').insert([{
+            const {error} = await supabase.from('transformers_toys').insert([{
                 name: name,
                 origin: origin,
                 series: series,
@@ -101,15 +102,24 @@ export default function useTransformers() {
     : TransformersSubgroup.filter((t) => {
         return t.release_year === parseInt(releaseYear);
     });
-    const TransformersPrice = price.toLowerCase() === "all"
+    const TransformersPrice = price === "all"
     ? TransformersReleaseYear
     : TransformersReleaseYear.filter((t) => {
-        return t.price.includes(parseInt(price));
+        if (price === "<= $500 MXN")    return t.price <= 500;
+        if (price === "> $500 MXN & <= $1,000 MXN")  return t.price > 500 && t.price <= 1000;
+        if (price === "> $1,000 MXN & <= $2,000 MXN")  return t.price > 1000 && t.price <= 2000;
+        if (price === "> $2,000 MXN")  return t.price > 2000;
+        return true;
     });
-    const TransformersStock = stock.toLowerCase() === "all"
+
+    const TransformersStock = stock === "all"
     ? TransformersPrice
     : TransformersPrice.filter((t) => {
-        return t.stock.includes(parseInt(stock));
+        if (stock === "<= 5")   return t.stock <= 5;
+        if (stock === "> 5 & <= 10")  return t.stock > 5 && t.stock <= 10;
+        if (stock === "> 10 & <= 15")  return t.stock > 10 && t.stock <= 15;
+        if (stock === "> 15")  return t.stock > 15;
+        return true;
     });
 
     const TransformerFiltrado = TransformersStock.filter((t)=>{

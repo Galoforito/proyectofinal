@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import './Formulario.css';
+import { Modal } from "react-bootstrap";
 
 interface Props{
     insertar: (name: string, origin: string, series: string, subgroup: string, release_year: number, image_url: string, price: number, stock: number) => void;
@@ -49,18 +50,37 @@ export default function Formulario({ insertar, editar, datoEditar, setDatoEditar
     setStock(0);
   }
   return (
-    <div>
-      <form onSubmit={manejarSubmit}>
-        <input type="text" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
-        <input type="text" placeholder="Origen" value={origen} onChange={(e) => setOrigen(e.target.value)} />
-        <input type="text" placeholder="Serie" value={serie} onChange={(e) => setSerie(e.target.value)} />
-        <input type="text" placeholder="Subgrupo" value={subgrupo} onChange={(e) => setSubgrupo(e.target.value)} />
-        <input type="number" placeholder="Año de Lanzamiento" value={anioLanzamiento} onChange={(e) => setAnioLanzamiento(Number(e.target.value))} />
-        <input type="text" placeholder="URL de Imagen" value={urlImagen} onChange={(e) => setUrlImagen(e.target.value)} />
-        <input type="number" placeholder="Precio" value={precio} onChange={(e) => setPrecio(Number(e.target.value))} />
-        <input type="number" placeholder="Stock" value={stock} onChange={(e) => setStock(Number(e.target.value))} />
-        <button type="submit">{datoEditar !== null ? 'Actualizar' : 'Guardar'}</button>
-      </form>
-    </div>
+    <>
+      <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabIndex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <div className="modal-header">
+              <h1 className="modal-title fs-5" id="staticBackdropLabel">{datoEditar !== null ? 'Actualizar' : 'Guardar'}</h1>
+              <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form onSubmit={manejarSubmit}>
+              <div className="modal-body">
+                  <input type="text" placeholder="Nombre" value={nombre} onChange={(e) => setNombre(e.target.value)} />
+                  <input type="text" placeholder="Origen" value={origen} onChange={(e) => setOrigen(e.target.value)} />
+                  <input type="text" placeholder="Serie" value={serie} onChange={(e) => setSerie(e.target.value)} />
+                  <input type="text" placeholder="Subgrupo" value={subgrupo} onChange={(e) => setSubgrupo(e.target.value)} />
+                  <input type="number" placeholder="Año de Lanzamiento" value={anioLanzamiento} onChange={(e) => setAnioLanzamiento(Number(e.target.value))} />
+                  <input type="text" placeholder="URL de Imagen" value={urlImagen} onChange={(e) => setUrlImagen(e.target.value)} />
+                  <input type="number" placeholder="Precio" value={precio} onChange={(e) => setPrecio(Number(e.target.value))} />
+                  <input type="number" placeholder="Stock" value={stock} onChange={(e) => setStock(Number(e.target.value))} />
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                <button type="submit" className="btn btn-primary" data-bs-dismiss="modal">{datoEditar !== null ? 'Actualizar' : 'Guardar'}</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        
+      </div>
+    </>
   )
 }

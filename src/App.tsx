@@ -1,4 +1,4 @@
-import { ControlBar, TableList, Formulario } from './components';
+import { ControlBar, TableList, Formulario, Title } from './components';
 import { useTransformers } from './hooks';
 
 export default function App() {
@@ -17,6 +17,7 @@ export default function App() {
         setDatoEditar} = useTransformers();    
     return (
       <>
+        <Title></Title>
         <ControlBar
         alPresionarSeries={setSeries}
         alPresionarSubgroup={setSubgroup}
@@ -32,22 +33,26 @@ export default function App() {
         datoEditar={datoEditar}
         setDatoEditar={setDatoEditar}
         />
-        {TransformerFiltrado.map((dato) => (
-          <TableList
-            key={dato.id}
-            id={dato.id}
-            name={dato.name}
-            origin={dato.origin}
-            series={dato.series}
-            subgroup={dato.subgroup}
-            release_year={dato.release_year}
-            image_url={dato.image_url}
-            price={dato.price}
-            stock={dato.stock}
-            onEditar={(id, name, origin, series, subgroup, release_year, image_url, price, stock) => setDatoEditar({ id, name, origin, series, subgroup, release_year, image_url, price, stock })}
-            onEliminar={(id) => eliminar(id)}
-          />
-        ))}
+        <div className="row">
+          {TransformerFiltrado.map((dato) => (
+            <TableList
+              key={dato.id}
+              id={dato.id}
+              name={dato.name}
+              origin={dato.origin}
+              series={dato.series}
+              subgroup={dato.subgroup}
+              release_year={dato.release_year}
+              image_url={dato.image_url}
+              price={dato.price}
+              stock={dato.stock}
+              onEditar={(id, name, origin, series, subgroup, release_year, image_url, price, stock) => setDatoEditar({ id, name, origin, series, subgroup, release_year, image_url, price, stock })}
+              onEliminar={(id) => eliminar(id)}
+            />
+          ))}
+        </div>
+
+        
       </>
     )
 }

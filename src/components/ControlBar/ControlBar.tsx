@@ -1,4 +1,41 @@
 import "./ControlBar.css"
+import { Formulario } from "../index";
+//Ayúdame a añadir el css!!!
+
+/*
+.control-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #1a1a1a; 
+    color: #fff;
+}
+.control-bar .search-input {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    width: 200px;
+}
+.control-bar .category-filter {
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    background-color: #333; 
+    color: #fff; 
+}
+.control-bar .create-button {
+    padding: 5px 15px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff; 
+    color: #fff; 
+    cursor: pointer;
+}
+.control-bar .create-button:hover {
+    background-color: #0056b3; 
+}
+*/
 
 interface PropsCategory{
     alPresionarSeries:(valor:string)=>void;
@@ -12,7 +49,8 @@ interface PropsCategory{
 function Category({alPresionarSeries, alPresionarSubgroup, alPresionarOrigin, alPresionarReleaseYear, alPresionarPrice, alPresionarStock}: PropsCategory){
     return(
         <>
-            <select id="series" onChange={(e)=>alPresionarSeries(e.target.value)}>
+            <label htmlFor="series">Serie: </label>
+            <select id="series" className="category-filter" onChange={(e)=>alPresionarSeries(e.target.value)}>
                 <option value="All">All</option>
                 <option value="Age of the Primes">Age of the Primes</option>
                 <option value="Studio Series">Studio Series</option>
@@ -20,7 +58,8 @@ function Category({alPresionarSeries, alPresionarSubgroup, alPresionarOrigin, al
                 <option value="War for Cybertron: Earthrise">War for Cybertron: Earthrise</option>
                 <option value="War for Cybertron: Kingdom">War for Cybertron: Kingdom</option>
             </select>
-            <select id="subgroup" onChange={(e)=>alPresionarSubgroup(e.target.value)}>
+            <label htmlFor="subgroup">Subgroup: </label>
+            <select id="subgroup" className="category-filter" onChange={(e)=>alPresionarSubgroup(e.target.value)}>
                 <option value="All">All</option>
                 <option value="Core Class">Core Class</option>
                 <option value="Deluxe Class">Deluxe Class</option>
@@ -29,7 +68,8 @@ function Category({alPresionarSeries, alPresionarSubgroup, alPresionarOrigin, al
                 <option value="Commander Class">Commander Class</option>
                 <option value="Titan Class">Titan Class</option>
             </select>
-            <select id="origin" onChange={(e)=>alPresionarOrigin(e.target.value)}>
+            <label htmlFor="origin">Origin: </label>
+            <select id="origin" className="category-filter" onChange={(e)=>alPresionarOrigin(e.target.value)}>
                 <option value="All">All</option>
                 <option value="G1 Transformers (1984)">G1 Transformers (1984)</option>
                 <option value="G1 Transformers (1985)">G1 Transformers (1985)</option>
@@ -54,7 +94,8 @@ function Category({alPresionarSeries, alPresionarSubgroup, alPresionarOrigin, al
                 <option value="Transformers: Armada (2002)">Transformers: Armada (2002)</option>
                 <option value="Transformers: Age of Extinction (2014)">Transformers: Age of Extinction (2014)</option>
             </select>
-            <select id="release_year" onChange={((e)=>alPresionarReleaseYear(e.target.value))}>
+            <label htmlFor="release_year">Año de Lanzamiento: </label>
+            <select id="release_year" className="category-filter" onChange={((e)=>alPresionarReleaseYear(e.target.value))}>
                 <option value="All">All</option>
                 <option value="2018">2018</option>
                 <option value="2019">2019</option>
@@ -65,20 +106,24 @@ function Category({alPresionarSeries, alPresionarSubgroup, alPresionarOrigin, al
                 <option value="2025">2025</option>
                 <option value="2026">2026</option>
             </select>
-            <select id="price" onChange={((e)=>alPresionarPrice(e.target.value))}>
+            <label htmlFor="price">Precio: </label>
+            <select id="price" className="category-filter" onChange={((e)=>alPresionarPrice(e.target.value))}>
+                //Adapta el texto que tienen los options a los values que tienen
                 <option value="All">All</option>
-                <option value="< $500 MXN">&lt; $500 MXN</option>
-                <option value="< $1,000 MXN">&lt; $1,000 MXN</option>
-                <option value="< $2,000 MXN">&lt; $2,000 MXN</option>
+                <option value="<= $500 MXN">&lt;= $500 MXN</option>
+                <option value="> $500 MXN & <= $1,000 MXN">&gt; $500 MXN &lt;= $1,000 MXN</option>
+                <option value="> $1,000 MXN & <= $2,000 MXN">&gt; $1,000 MXN &lt;= $2,000 MXN</option>
                 <option value="> $2,000 MXN">&gt; $2,000 MXN</option>
             </select>
-            <select id="stock" onChange={((e)=>alPresionarStock(e.target.value))}>
+            <label htmlFor="stock">Stock: </label>
+            <select id="stock" className="category-filter" onChange={((e)=>alPresionarStock(e.target.value))}>
                 <option value="All">All</option>
-                <option value="< 5">&lt; 5</option>
-                <option value="< 10">&lt; 10</option>
-                <option value="< 15">&lt; 15</option>
+                <option value="<= 5">&lt;= 5</option>
+                <option value="> 5 & <= 10">&gt; 5 &lt;= 10</option>
+                <option value="> 10 & <= 15">&gt; 10 &lt;= 15</option>
                 <option value="> 15">&gt; 15</option>
             </select>
+            
         </>
     )
 }
@@ -90,10 +135,18 @@ interface PropsSearch{
 function Search({alEscribir}:PropsSearch){
     return(
         <input type="text"
-        className="search"
+        className="search-input"
         placeholder="Busca tu Transformer"
         onChange={(e)=>alEscribir(e.target.value)}
         />
+    )
+}
+
+function CreateModal({}){
+    return(
+        <button type="button" className="btn btn-primary create-button" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+            Crear
+        </button>
     )
 }
 
@@ -109,6 +162,7 @@ export default function ControlBar({alPresionarSeries, alPresionarSubgroup, alPr
             alPresionarStock={alPresionarStock}
             />
             <Search alEscribir={alEscribir}/>
+            <CreateModal/>
         </div>
     )
 }
